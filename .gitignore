@@ -205,3 +205,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+data/dataset_of_32k_pokemon_Images_and_csv_json/
+data/dataset_of_32k_pokemon_Images_and_csv_json.zip

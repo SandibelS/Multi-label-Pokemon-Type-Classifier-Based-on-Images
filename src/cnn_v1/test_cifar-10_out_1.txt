@@ -1,0 +1,110 @@
+Arquitectuta: 
+    Conv2D  32 filtros de 3x3, stride 1, padding 0, RGB input (3 canales)
+    ReLU
+    MaxPool2D filtro de 2x2 , stride de 2 (tam del filtro)
+    Flatten
+    Dense entrada de 32*15*15, salida 10 (clases)
+
+
+Salida del entrenamiento:
+
+Epoch 1/100, Loss: 2.3836, Accuracy: 12.3000%
+Epoch 2/100, Loss: 2.2998, Accuracy: 14.3000%
+Epoch 3/100, Loss: 2.2821, Accuracy: 13.6000%
+Epoch 4/100, Loss: 2.2722, Accuracy: 15.2000%
+Epoch 5/100, Loss: 2.2608, Accuracy: 12.3000%
+Epoch 6/100, Loss: 2.2596, Accuracy: 15.3000%
+Epoch 7/100, Loss: 2.2525, Accuracy: 15.4000%
+Epoch 8/100, Loss: 2.2416, Accuracy: 13.9000%
+Epoch 9/100, Loss: 2.2389, Accuracy: 15.6000%
+Epoch 10/100, Loss: 2.2213, Accuracy: 18.3000%
+Epoch 11/100, Loss: 2.2192, Accuracy: 20.2000%
+Epoch 12/100, Loss: 2.2071, Accuracy: 19.9000%
+Epoch 13/100, Loss: 2.1983, Accuracy: 18.8000%
+Epoch 14/100, Loss: 2.1931, Accuracy: 15.3000%
+Epoch 15/100, Loss: 2.1915, Accuracy: 19.4000%
+Epoch 16/100, Loss: 2.1807, Accuracy: 21.5000%
+Epoch 17/100, Loss: 2.1769, Accuracy: 20.8000%
+Epoch 18/100, Loss: 2.1723, Accuracy: 20.4000%
+Epoch 19/100, Loss: 2.1663, Accuracy: 23.5000%
+Epoch 20/100, Loss: 2.1539, Accuracy: 19.1000%
+Epoch 21/100, Loss: 2.1604, Accuracy: 23.4000%
+Epoch 22/100, Loss: 2.1502, Accuracy: 22.4000%
+Epoch 23/100, Loss: 2.1404, Accuracy: 23.2000%
+Epoch 24/100, Loss: 2.1405, Accuracy: 24.3000%
+Epoch 25/100, Loss: 2.1317, Accuracy: 25.1000%
+Epoch 26/100, Loss: 2.1277, Accuracy: 23.6000%
+Epoch 27/100, Loss: 2.1254, Accuracy: 26.4000%
+Epoch 28/100, Loss: 2.1209, Accuracy: 25.8000%
+Epoch 29/100, Loss: 2.1119, Accuracy: 24.2000%
+Epoch 30/100, Loss: 2.1137, Accuracy: 27.3000%
+Epoch 31/100, Loss: 2.0991, Accuracy: 27.0000%
+Epoch 32/100, Loss: 2.0995, Accuracy: 24.2000%
+Epoch 33/100, Loss: 2.0978, Accuracy: 19.5000%
+Epoch 34/100, Loss: 2.1039, Accuracy: 27.3000%
+Epoch 35/100, Loss: 2.0898, Accuracy: 26.8000%
+Epoch 36/100, Loss: 2.0852, Accuracy: 26.8000%
+Epoch 37/100, Loss: 2.0849, Accuracy: 28.6000%
+Epoch 38/100, Loss: 2.0741, Accuracy: 28.5000%
+Epoch 39/100, Loss: 2.0685, Accuracy: 27.3000%
+Epoch 40/100, Loss: 2.0670, Accuracy: 28.4000%
+Epoch 41/100, Loss: 2.0687, Accuracy: 28.3000%
+Epoch 42/100, Loss: 2.0554, Accuracy: 30.4000%
+Epoch 43/100, Loss: 2.0535, Accuracy: 29.5000%
+Epoch 44/100, Loss: 2.0577, Accuracy: 25.9000%
+Epoch 45/100, Loss: 2.0567, Accuracy: 29.8000%
+Epoch 46/100, Loss: 2.0484, Accuracy: 27.6000%
+Epoch 47/100, Loss: 2.0477, Accuracy: 24.6000%
+Epoch 48/100, Loss: 2.0393, Accuracy: 30.8000%
+Epoch 49/100, Loss: 2.0356, Accuracy: 31.3000%
+Epoch 50/100, Loss: 2.0325, Accuracy: 30.5000%
+Epoch 51/100, Loss: 2.0320, Accuracy: 29.3000%
+Epoch 52/100, Loss: 2.0273, Accuracy: 30.5000%
+Epoch 53/100, Loss: 2.0276, Accuracy: 29.6000%
+Epoch 54/100, Loss: 2.0191, Accuracy: 32.0000%
+Epoch 55/100, Loss: 2.0125, Accuracy: 30.0000%
+Epoch 56/100, Loss: 2.0211, Accuracy: 32.0000%
+Epoch 57/100, Loss: 2.0144, Accuracy: 28.9000%
+Epoch 58/100, Loss: 2.0081, Accuracy: 29.7000%
+Epoch 59/100, Loss: 2.0033, Accuracy: 31.4000%
+Epoch 60/100, Loss: 2.0030, Accuracy: 31.7000%
+Epoch 61/100, Loss: 1.9964, Accuracy: 33.4000%
+Epoch 62/100, Loss: 1.9938, Accuracy: 32.9000%
+Epoch 63/100, Loss: 1.9933, Accuracy: 28.6000%
+Epoch 64/100, Loss: 1.9867, Accuracy: 28.6000%
+Epoch 65/100, Loss: 1.9818, Accuracy: 29.8000%
+Epoch 66/100, Loss: 1.9917, Accuracy: 33.6000%
+Epoch 67/100, Loss: 1.9803, Accuracy: 34.3000%
+Epoch 68/100, Loss: 1.9792, Accuracy: 30.1000%
+Epoch 69/100, Loss: 1.9748, Accuracy: 29.9000%
+Epoch 70/100, Loss: 1.9730, Accuracy: 35.5000%
+Epoch 71/100, Loss: 1.9750, Accuracy: 35.5000%
+Epoch 72/100, Loss: 1.9699, Accuracy: 33.8000%
+Epoch 73/100, Loss: 1.9658, Accuracy: 30.8000%
+Epoch 74/100, Loss: 1.9631, Accuracy: 35.1000%
+Epoch 75/100, Loss: 1.9513, Accuracy: 31.3000%
+Epoch 76/100, Loss: 1.9540, Accuracy: 31.3000%
+Epoch 77/100, Loss: 1.9546, Accuracy: 30.4000%
+Epoch 78/100, Loss: 1.9524, Accuracy: 33.0000%
+Epoch 79/100, Loss: 1.9435, Accuracy: 32.6000%
+Epoch 80/100, Loss: 1.9406, Accuracy: 34.5000%
+Epoch 81/100, Loss: 1.9429, Accuracy: 37.0000%
+Epoch 82/100, Loss: 1.9404, Accuracy: 30.9000%
+Epoch 83/100, Loss: 1.9319, Accuracy: 34.7000%
+Epoch 84/100, Loss: 1.9314, Accuracy: 33.1000%
+Epoch 85/100, Loss: 1.9371, Accuracy: 32.9000%
+Epoch 86/100, Loss: 1.9292, Accuracy: 33.8000%
+Epoch 87/100, Loss: 1.9247, Accuracy: 37.1000%
+Epoch 88/100, Loss: 1.9293, Accuracy: 38.1000%
+Epoch 89/100, Loss: 1.9126, Accuracy: 36.1000%
+Epoch 90/100, Loss: 1.9189, Accuracy: 33.6000%
+Epoch 91/100, Loss: 1.9120, Accuracy: 35.2000%
+Epoch 92/100, Loss: 1.9076, Accuracy: 34.8000%
+Epoch 93/100, Loss: 1.9131, Accuracy: 34.2000%
+Epoch 94/100, Loss: 1.9037, Accuracy: 36.0000%
+Epoch 95/100, Loss: 1.9035, Accuracy: 33.7000%
+Epoch 96/100, Loss: 1.9025, Accuracy: 37.6000%
+Epoch 97/100, Loss: 1.8957, Accuracy: 37.2000%
+Epoch 98/100, Loss: 1.8983, Accuracy: 36.8000%
+Epoch 99/100, Loss: 1.9016, Accuracy: 33.4000%
+Epoch 100/100, Loss: 1.9049, Accuracy: 35.3000%

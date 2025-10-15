@@ -1,0 +1,85 @@
+import pandas as pd
+import numpy as np
+from tqdm import tqdm
+from keras.preprocessing import image
+import matplotlib.pyplot as plt
+import os
+
+
+def remove_parentheses_from_folders_and_files(path : str):
+
+    # Iterar sobre todos los elementos en la carpeta
+    for name in os.listdir(path):
+
+        full_path = os.path.join(path, name)
+
+        # Verificar si es una carpeta
+        if os.path.isdir(full_path):
+
+            new_name = name.replace('(', '').replace(')', '')
+            new_path = os.path.join(path, new_name)
+
+            # Renombrar si el nombre cambió
+            if new_name != name:
+
+                os.rename(full_path, new_path)
+                print(f'Renombrado: {name} -> {new_name}')
+            
+            # Recorrer todos los archivos dentro de la subcarpeta
+            for filename in os.listdir(full_path):
+
+                file_path = os.path.join(full_path, filename)
+
+                # Renombrar si contiene paréntesis
+                new_filename = filename.replace('(', '').replace(')', '')
+                new_file_path = os.path.join(full_path, new_filename)
+
+                if new_filename != filename:
+                    os.rename(file_path, new_file_path)
+                    print(f'Renombrado: {filename} -> {new_filename}')
+
+
+
+def preproccess_images(images_path : str, csv_path : str, resize : int, channels = 3, exceptions = []):
+    """
+    """
+
+    # Leemos el archivo de csv limpio para saber el nombre de los pokemones y asi su carpeta
+    df1 = pd.read_csv(csv_path)
+
+    images = []
+    
+    # Por cada fila vamos a buscar la imagen del dataset
+    for i in tqdm(range(df1.shape[0])):
+
+        if(df1['Pokemon'][i] in exceptions):
+            continue
+
+        img = image.load_img(f"{images_path}/{df1['Pokemon'][i]}/{df1['Pokemon'][i]}.png",target_size=(resize, resize, channels))
+        img = image.img_to_array(img)
+        img = img/255
+        images.append(img)
+
+    X = np.array(images)
+
+    print(X.shape)
+    plt.savefig('src/plots/image_example.png')
+    plt.imshow(X[0])
+
+# Pre-procesamiento
+
+remove_parentheses_from_folders_and_files('data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB')
+
+# Una lista de algunos pokemones con casos especiales
+exceptions = [
+                'Castform Sunny Form','Castform Rainy Form', 'Castform Snowy Form', # Solo hay una carpeta de Castform
+                'Eternatus Eternamax', # solo hay Eternatus
+                
+                'Dudunsparce Three-Segment Form', #Solo esta la carpeta Dudunsparce Two-Segment Form
+
+                'Partner Eevee', # Esta es Eevee Partner Eevee, este es un problema general 
+              ]
+
+preproccess_images('data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB', 
+                   'data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv',
+                   400, exceptions=exceptions)

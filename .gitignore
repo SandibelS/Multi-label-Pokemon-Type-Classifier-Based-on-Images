@@ -208,3 +208,5 @@ __marimo__/
 
 data/dataset_of_32k_pokemon_Images_and_csv_json/
 data/dataset_of_32k_pokemon_Images_and_csv_json.zip
+
+src/plots/*.png

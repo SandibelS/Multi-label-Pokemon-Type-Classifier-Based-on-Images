@@ -1,4 +1,6 @@
 import numpy as np
+from utility_functions import softmax, accuracy, cross_entropy_loss, cross_entropy_grad, sigmoid, binary_cross_entropy, binary_cross_entropy_grad
+
 
 # -------------------------------
 # Layers
@@ -354,4 +356,60 @@ class SimpleCNN:
         d = self.relu1.backward(d)
         d = self.conv1.backward(d, lr)
 
+    def train_multi_class(self, learning_rate=0.01, epochs=50, batch_size=32 ):
 
+        for epoch in range(epochs):
+            idx = np.random.permutation(len(x_train))
+            x_train, y_train_oh = x_train[idx], y_train_oh[idx]
+
+            losses = []
+            for i in range(0, len(x_train), batch_size):
+                x_batch = x_train[i:i+batch_size]
+                y_batch = y_train_oh[i:i+batch_size]
+
+                # forward
+                logits = self.forward(x_batch)
+                probs = softmax(logits)
+                loss = cross_entropy_loss(probs, y_batch)
+                losses.append(loss)
+
+                # backward
+                d_out = cross_entropy_grad(probs, y_batch)
+                self.backward(d_out, learning_rate)
+            
+            # Accuracy
+            logits = self.forward(x_train)
+            probs = softmax(logits)
+            acc = accuracy(probs, y_train_oh)
+
+            print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.4f}, Accuracy: {acc*100:.4f}%")
+    
+    def train_multi_label(self, learning_rate=0.01, epochs=50, batch_size=32 ):
+
+        for epoch in range(epochs):
+            idx = np.random.permutation(len(x_train))
+            x_train, y_train_oh = x_train[idx], y_train_oh[idx]
+
+            losses = []
+            for i in range(0, len(x_train), batch_size):
+                x_batch = x_train[i:i+batch_size]
+                y_batch = y_train_oh[i:i+batch_size]
+
+                # forward
+
+                logits = self.forward(x_batch)
+                probs = sigmoid(logits)       
+                loss = binary_cross_entropy(probs, y_batch)
+                losses.append(loss)
+
+                # backward
+                d_out = binary_cross_entropy_grad(probs, y_batch)
+                self.backward(d_out, learning_rate)
+            
+            # Accuracy
+            logits = self.forward(x_train)
+            probs = softmax(logits)
+            acc = accuracy(probs, y_train_oh)
+
+            print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.4f}, Accuracy: {acc*100:.4f}%")
+        

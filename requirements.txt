@@ -24,3 +24,5 @@ urllib3==2.5.0
 scipy==1.15.3
 keras==3.11.3
 scikit-learn==1.7.2
+
+tqdm==4.67.1

@@ -384,6 +384,24 @@ class SimpleCNN:
 
             print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.4f}, Accuracy: {acc*100:.4f}%")
     
+    def predict_multi_class(self, x):
+        """
+        Realiza predicciones para problemas de clasificación multi-class.
+
+        Parámetros:
+        - x (ndarray): imágenes de entrada
+
+        Retorna:
+        - predicciones (ndarray): clase predicha para cada muestra
+        """
+
+        logits = self.forward(x)
+        probs = softmax(logits)
+        predictions = np.argmax(probs, axis=1)
+
+        return predictions
+
+    
     def train_multi_label(self, learning_rate=0.01, epochs=50, batch_size=32 ):
 
         for epoch in range(epochs):
@@ -412,4 +430,68 @@ class SimpleCNN:
             acc = accuracy(probs, y_train_oh)
 
             print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.4f}, Accuracy: {acc*100:.4f}%")
+
         
+    def predict_multi_label(self, x, threshold=0.5, top_k=None):
+        """
+        Realiza predicciones para problemas de clasificación multi-label.
+
+        Parámetros:
+        - x (ndarray): imágenes de entrada
+        - threshold (float): umbral para decidir si una etiqueta está activa
+        - top_k (int or None): número máximo de etiquetas a predecir por muestra. 
+                               Si se especifica, se ignora el umbral y se devuelven los índices 
+                               de las top_k etiquetas con mayor probabilidad.
+
+        Retorna:
+        - predicciones (List[List[int]]): lista de listas con los índices de etiquetas activas por muestra
+
+        """
+        logits = self.forward(x)
+        probs = sigmoid(logits)
+
+        if top_k is not None:
+            # Devuelve los índices de las top_k etiquetas más probables por muestra, hay que chquear 
+            return [np.argsort(row)[::-1][:top_k].tolist() for row in probs]
+            
+        # Devuelve los índices donde la probabilidad supera el umbral
+        return [np.where(row >= threshold)[0].tolist() for row in probs]
+    
+
+    def evaluate_multi_label(y_true, y_pred):
+        """
+        Evalúa métricas de precisión, recall y F1 para clasificación multi-label.
+
+        Parámetros:
+        - y_true (ndarray): etiquetas verdaderas (binarias), forma (n_samples, n_labels)
+        - y_pred (ndarray): etiquetas predichas (binarias), forma (n_samples, n_labels)
+
+        Retorna:
+        - metrics (dict): diccionario con precisión, recall y F1 promedio
+        """
+
+        epsilon = 1e-7  # para evitar división por cero
+        precisions, recalls, f1s = [], [], []
+
+        for yt, yp in zip(y_true, y_pred):
+            tp = np.sum((yt == 1) & (yp == 1))
+            fp = np.sum((yt == 0) & (yp == 1))
+            fn = np.sum((yt == 1) & (yp == 0))
+
+            precision = tp / (tp + fp + epsilon)
+            recall = tp / (tp + fn + epsilon)
+            f1 = 2 * precision * recall / (precision + recall + epsilon)
+
+            precisions.append(precision)
+            recalls.append(recall)
+            f1s.append(f1)
+
+        metrics = {
+            "precision": np.mean(precisions),
+            "recall": np.mean(recalls),
+            "f1_score": np.mean(f1s)
+        }
+
+        return metrics
+
+

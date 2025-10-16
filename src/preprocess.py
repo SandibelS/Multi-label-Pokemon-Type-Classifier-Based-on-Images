@@ -68,11 +68,14 @@ def preproccess_images(images_path : str, csv_path : str, resize : int, channels
     df1 = pd.read_csv(csv_path)
 
     images = []
+
+    index_discard = []
     
     # Por cada fila vamos a buscar la imagen del dataset
     for i in tqdm(range(df1.shape[0])):
 
         if(df1['Pokemon'][i] in exceptions):
+            index_discard.append(i)
             continue
 
         img = image.load_img(f"{images_path}/{df1['Pokemon'][i]}/{df1['Pokemon'][i]}.png",target_size=(resize, resize, channels))
@@ -87,6 +90,10 @@ def preproccess_images(images_path : str, csv_path : str, resize : int, channels
     plt.savefig('src/plots/image_example.png')
 
     image_grid(X[0:32])
+
+    y = np.array( (df1.drop(['Pokemon'], axis=1)).drop(index_discard, axis=0) )
+
+    return X, y
 
 
 # Pre-procesamiento
@@ -152,6 +159,8 @@ exceptions = [
                 'Type: Null', # Supongo que error de la limpieza del dataset
                ]
 
-preproccess_images('data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB', 
-                   'data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv',
-                   400, exceptions=exceptions)
+X, y = preproccess_images( 'data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB', 
+                                        'data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv',
+                                        400, exceptions=exceptions)
+
+

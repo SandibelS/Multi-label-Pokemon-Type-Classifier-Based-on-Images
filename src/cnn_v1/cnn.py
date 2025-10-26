@@ -321,6 +321,95 @@ class SimpleCNN:
         self.flatten = Flatten()
         # CIFAR10: input 32x32 -> 15x15 after conv+pool
         self.fc1 = Dense(32*15*15, 10)  
+
+        # Suponiendo una entrada de 32x32, ojo!
+
+        self.model_0 = [
+            Conv2D(16, 3, 3, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+            Flatten(),
+            Dense(16*8*8, 18),
+        ]
+
+        self.model_1 = [
+            Conv2D(32, 3, 3, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+            Flatten(),
+            Dense(32*16*16, 18),
+        ]
+
+        self.model_2 = [
+            Conv2D(16, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+            Flatten(),
+            Dense(16*15*15, 18),
+        ]
+
+        self.model_3 = [
+            Conv2D(32, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+            Flatten(),
+            Dense(32*15*15, 18),
+        ]
+
+        self.model_4 = [
+            Conv2D(16, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Conv2D(32, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Flatten(),
+            Dense(32*6*6, 18),
+        ]
+
+
+        self.model_5 = [
+            Conv2D(16, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Conv2D(32, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+        
+            Conv2D(64, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Flatten(),
+            Dense(64*2*2, 18),
+        ]
+
+        self.model_6 = [
+            Conv2D(16, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Conv2D(32, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+        
+            Conv2D(64, 5, 5, padding=1),
+            ReLU(),
+            MaxPool2D(2, 2),
+
+            Flatten(),
+            Dense(64*2*2, 128),
+
+            Dense(128, 18),
+
+        ]
+
+
+
+
         
     def forward(self, x):
         """
@@ -401,7 +490,6 @@ class SimpleCNN:
 
         return predictions
 
-    
     def train_multi_label(self, learning_rate=0.01, epochs=50, batch_size=32 ):
 
         for epoch in range(epochs):

@@ -5,6 +5,8 @@ from keras.preprocessing import image
 import matplotlib.pyplot as plt
 import os
 
+from plots.plots import image_grid
+
 
 def remove_parentheses_from_folders_and_files(path : str):
 
@@ -37,30 +39,6 @@ def remove_parentheses_from_folders_and_files(path : str):
                 if new_filename != filename:
                     os.rename(file_path, new_file_path)
                     print(f'Renombrado: {filename} -> {new_filename}')
-
-
-def image_grid(imagenes, filas=4, columnas=4, tamaño=(15,15), filename='src/plots/image_grid.png'):
-    """
-    Muestra una cuadrícula de imágenes usando matplotlib.
-
-    Parámetros:
-    - imagenes (list o ndarray): lista o arreglo de imágenes (cada una de forma H x W x C)
-    - filas (int): número de filas en la cuadrícula
-    - columnas (int): número de columnas en la cuadrícula
-    - tamaño (tuple): tamaño del gráfico (ancho, alto) 
-    """
-    plt.figure(figsize=tamaño)
-    
-    for i in range(filas * columnas):
-        if i >= len(imagenes):
-            break
-        plt.subplot(filas, columnas, i + 1)
-        plt.imshow(imagenes[i])
-    
-    plt.tight_layout()
-    plt.show()
-    plt.savefig(filename)
-
 
 def preproccess_images(images_path : str, csv_path : str, resize : int, channels = 3, exceptions = [], only_multi_label = True):
 

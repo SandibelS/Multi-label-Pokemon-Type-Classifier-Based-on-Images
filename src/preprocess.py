@@ -62,7 +62,7 @@ def image_grid(imagenes, filas=4, columnas=4, tamaño=(15,15), filename='src/plo
     plt.savefig(filename)
 
 
-def preproccess_images(images_path : str, csv_path : str, resize : int, channels = 3, exceptions = []):
+def preproccess_images(images_path : str, csv_path : str, resize : int, channels = 3, exceptions = [], only_multi_label = True):
 
     # Leemos el archivo de csv limpio para saber el nombre de los pokemones y asi su carpeta
     df1 = pd.read_csv(csv_path)
@@ -93,74 +93,13 @@ def preproccess_images(images_path : str, csv_path : str, resize : int, channels
 
     y = np.array( (df1.drop(['Pokemon'], axis=1)).drop(index_discard, axis=0) )
 
+    if (only_multi_label):
+
+        active_counts = np.sum(y, axis=1)
+        mask = active_counts > 1
+
+        X = X[mask]
+        y = y[mask]
+
     return X, y
-
-
-# Pre-procesamiento
-
-remove_parentheses_from_folders_and_files('data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB')
-
-# Una lista de algunos pokemones con casos especiales
-exceptions = [
-                'Castform Sunny Form','Castform Rainy Form', 'Castform Snowy Form', # Solo hay una carpeta de Castform
-                'Eternatus Eternamax', # solo hay una carpeta Eternatus
-                'Nidoran♀ (female) Nidoran♀', # solo hay una carpeta Nidoran♀
-                'Nidoran♂ (male) Nidoran♂',   # solo hay Nidoran♂
-                'Ursaluna Bloodmoon', # solo hay Ursaluna
-
-                "Farfetch'd",   # le cambiaron el nombre a Farfetch_d, hay que ajustarlo manualmente en el csv
-                "Galarian Farfetch'd",
-                "Oricorio Pa'u Style",
-                "Sirfetch'd",
-                
-                'Dudunsparce Three-Segment Form',   # No esta. Solo esta la carpeta Dudunsparce Two-Segment Form
-                'Maushold Family of Three',         # No esta. Solo esta la carptea Maushold Family of Four
-
-                'Gouging Fire',  # No esta, hay que revisar si en las otras carpetas estan
-                'Gourgeist Average Size',
-                'Gourgeist Small Size',
-                'Gourgeist Large Size',
-                'Gourgeist Super Size',
-                'Hydrapple',
-                'Iron Boulder',
-                'Ogerpon Wellspring Mask',
-                'Ogerpon Hearthflame Mask',
-                'Ogerpon Cornerstone Mask',
-                'Pumpkaboo Average Size',
-                'Pumpkaboo Small Size',
-                'Pumpkaboo Large Size',
-                'Pumpkaboo Super Size',
-                'Own Tempo Rockruff',
-                'Sinistcha',
-                'Squawkabilly Blue Plumage',
-                'Squawkabilly Yellow Plumage',
-                'Squawkabilly White Plumage',
-                'Terapagos Stellar Form',
-
-                'Mime Jr.', # la carpeta no tiene ese punto (es parte del nombre o solo es un error?)
-
-                'Partner Eevee',        # Esta es Eevee Partner Eevee, este es un problema general 
-                'Ash-Greninja',         # Greninja Ash-Greninja
-                'Hoopa Confined',       # Hoopa Hoopa Confined
-                "Hoopa Unbound",        # Hoopa Hoopa Unbound
-                'White Kyurem',         # Kyurem White Kyurem
-                'Black Kyurem',         # Kyurem Black Kyurem
-                'Dusk Mane Necrozma',   # Necrozma Dusk Mane Necrozma
-                'Dusk Wings Necrozma',  # Necrozma Dusk Wings Necrozma
-                'Dawn Wings Necrozma',  # Necrozma Dawn Wings Necrozma 
-                'Ultra Necrozma',       # Necrozma Ultra Necrozma
-                'Partner Pikachu',      # Pikachu Partner Pikachu
-                'Heat Rotom',           # Rotom Heat Rotom
-                'Wash Rotom',           # Rotom Wash Rotom
-                'Frost Rotom',          # Rotom Frost Rotom
-                'Fan Rotom',            # Rotom Fan Rotom
-                'Mow Rotom',            # Rotom Mow Rotom
-
-                'Type: Null', # Supongo que error de la limpieza del dataset
-               ]
-
-X, y = preproccess_images( 'data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB', 
-                                        'data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv',
-                                        400, exceptions=exceptions)
-
 

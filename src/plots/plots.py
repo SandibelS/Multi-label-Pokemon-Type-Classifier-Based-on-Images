@@ -80,3 +80,31 @@ def image_grid(imagenes, filas=4, columnas=4, tamaño=(15,15), filename='src/plo
     plt.show()
     plt.savefig(filename)
 
+
+def plot_class_distribution(y, classes, path):
+    """
+    Genera y guarda un gráfico de barras con la cantidad de ocurrencias por clase en un arreglo multi-hot.
+
+    Parámetros:
+    - y (np.ndarray): arreglo de vectores multi-hot de forma (n_samples, n_classes)
+    - classes (list of str): nombres de las clases correspondientes a cada columna de y
+    - path (str): ruta completa (incluyendo nombre de archivo) donde se guardará el gráfico
+
+    Retorna:
+    - None
+    """
+    # Sumar ocurrencias por clase
+    class_counts = np.sum(y, axis=0)
+
+    # Crear gráfico de barras
+    plt.figure(figsize=(10, 6))
+    plt.bar(classes, class_counts, color='skyblue')
+    plt.xlabel('Clases')
+    plt.ylabel('Número de ocurrencias')
+    plt.title('Distribución de clases en el conjunto multi-hot')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    # Guardar gráfico
+    plt.savefig(path)
+    plt.close()

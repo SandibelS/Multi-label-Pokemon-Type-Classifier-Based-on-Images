@@ -1,5 +1,5 @@
 import numpy as np
-from utility_functions import softmax, accuracy, cross_entropy_loss, cross_entropy_grad, sigmoid, binary_cross_entropy, binary_cross_entropy_grad
+from .utility_functions import softmax, accuracy, cross_entropy_loss, cross_entropy_grad, sigmoid, binary_cross_entropy, binary_cross_entropy_grad
 
 
 # -------------------------------

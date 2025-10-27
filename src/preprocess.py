@@ -63,7 +63,6 @@ def preproccess_images(images_path : str, csv_path : str, resize : int, channels
 
     X = np.array(images)
 
-    print(X.shape)
     plt.imshow(X[2])
     plt.savefig('src/plots/image_example.png')
     plt.close()

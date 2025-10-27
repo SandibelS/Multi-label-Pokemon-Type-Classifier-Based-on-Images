@@ -20,8 +20,60 @@ class CNN_keras():
 
     def __init__(self, input_size : int, input_channels : int):
 
+        # -------------------------------------- 
+        # MODEL 0
 
-        self.model = tf.keras.Sequential([
+        model_0 = Sequential()
+        model_0.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
+
+        model_0.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_0.add(Flatten())
+        model_0.add(Dense(18, activation='sigmoid'))
+
+        # --------------------------------------
+        # MODEL 1
+
+        model_1 = Sequential()
+        model_1.add(Conv2D(filters=32, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
+        model_1.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_1.add(Flatten())
+        model_1.add(Dense(18, activation='sigmoid'))
+
+        # --------------------------------------
+        # MODEL 2
+
+        model_2 = Sequential()
+        model_2.add(Conv2D(filters=16, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
+        model_2.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_2.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
+        model_2.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_2.add(Flatten())
+        model_2.add(Dense(18, activation='sigmoid'))
+
+        # --------------------------------------
+
+        # MODEL 3
+
+        model_3 = Sequential()
+        model_3.add(Conv2D(filters=16, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
+        model_3.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_3.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
+        model_3.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_3.add(Conv2D(filters=64, kernel_size=(3, 3), activation='relu'))
+        model_3.add(MaxPooling2D(pool_size=(2, 2)))
+
+        model_3.add(Flatten())
+        model_3.add(Dense(18, activation='sigmoid'))
+
+        # --------------------------------------
+
+        self.model_4 = tf.keras.Sequential([
 
                 Input(shape=(input_size, input_size, input_channels)),
 
@@ -47,127 +99,13 @@ class CNN_keras():
                 Dense(18), 
             ])
 
-        self.model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), 
+        # --------------------------------------
+
+        self.model_4.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), 
                           loss=tf.keras.losses.BinaryCrossentropy(from_logits=True), 
                           metrics=[tf.keras.metrics.TopKCategoricalAccuracy(k=2)])
 
-
-        # -------------------------------------- 
-        # MODEL 0
-
-        model_0 = Sequential()
-        model_0.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
-
-        model_0.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # model_0.add(Dropout(0.5))
-
-        model_0.add(Flatten())
-        model_0.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-        # MODEL 1
-
-        model_1 = Sequential()
-        model_1.add(Conv2D(filters=32, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_1.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_1.add(Dropout(0.25))
-
-        model_1.add(Flatten())
-        model_1.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-        # MODEL 2
-
-        model_2 = Sequential()
-        model_2.add(Conv2D(filters=16, kernel_size=(5, 5), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_2.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # model_2.add(Dropout(0.25))
-
-        model_2.add(Flatten())
-        model_2.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-        # MODEL 3
-
-        model_3 = Sequential()
-        model_3.add(Conv2D(filters=32, kernel_size=(5, 5), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_3.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # model_3.add(Dropout(0.25))
-
-        model_3.add(Flatten())
-        model_3.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-
-        # MODEL 4
-
-        model_4 = Sequential()
-        model_4.add(Conv2D(filters=16, kernel_size=(5, 5), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_4.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_4.add(Dropout(0.25))
-
-        model_4.add(Conv2D(filters=32, kernel_size=(5, 5), activation='relu'))
-        model_4.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_4.add(Dropout(0.25))
-
-        model_4.add(Flatten())
-        model_4.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-
-        # MODEL 5
-
-        model_5 = Sequential()
-        model_5.add(Conv2D(filters=16, kernel_size=(5, 5), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_5.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_5.add(Dropout(0.25))
-
-        model_5.add(Conv2D(filters=32, kernel_size=(5, 5), activation='relu'))
-        model_5.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_5.add(Dropout(0.25))
-
-        model_5.add(Conv2D(filters=64, kernel_size=(5, 5), activation='relu'))
-        model_5.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_5.add(Flatten())
-        model_5.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-
-        # MODEL 6
-
-        model_6 = Sequential()
-        model_6.add(Conv2D(filters=16, kernel_size=(5, 5), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_6.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_6.add(Dropout(0.25))
-
-        model_6.add(Conv2D(filters=32, kernel_size=(5, 5), activation='relu'))
-        model_6.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_6.add(Dropout(0.25))
-
-        model_6.add(Conv2D(filters=64, kernel_size=(5, 5), activation='relu'))
-        model_6.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_6.add(Flatten())
-
-        model_6.add(Dense(128, activation='relu'))
-        model_6.add(Dropout(0.5))
-
-        model_6.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-
-        self.models = [model_0, model_1, model_2, model_3, model_4, model_5, model_6, self.model]
+        self.models = [model_0, model_1, model_2, model_3, self.model_4]
 
         # for model in self.models:
         #     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])

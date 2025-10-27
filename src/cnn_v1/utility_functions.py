@@ -42,3 +42,16 @@ def accuracy(y_pred, y_true):
     pred_labels = np.argmax(y_pred, axis=1)
     true_labels = np.argmax(y_true, axis=1)
     return np.mean(pred_labels == true_labels)
+
+def top_k_accuracy(y_pred, y_true, k=2):
+    """
+    Calcula la precisión Top-k para clasificación multi-label
+    """
+    correct = 0
+    for i in range(len(y_true)):
+        top_k_indices = np.argsort(y_pred[i])[::-1][:k]
+        true_indices = np.where(y_true[i] == 1)[0]
+        if any(label in top_k_indices for label in true_indices):
+            correct += 1
+            
+    return correct / len(y_true)

@@ -114,7 +114,7 @@ def plot_class_distribution(y, classes, path):
     plt.savefig(path)
     plt.close()
 
-def plot_loss_and_accuracy_keras(history, path):
+def plot_loss_and_accuracy_keras(history,TopKCategoricalAccuracy = False, path_loss = 'loss_keras.png', path_accuracy = 'accuracy_keras.png'):
 
     # loss
     plt.plot(history.history['loss'], label='Train Loss')
@@ -124,16 +124,30 @@ def plot_loss_and_accuracy_keras(history, path):
     plt.title('Función de pérdida')
     plt.legend()
     plt.show()
+    plt.savefig(path_loss)
+    plt.close()
 
     # Accuracy
-    plt.plot(history.history['accuracy'], label='Train Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Val Accuracy')
-    plt.xlabel('Epochs')
-    plt.ylabel('Accuracy')
-    plt.title('Precisión')
-    plt.legend()
+    if ( TopKCategoricalAccuracy):
+        plt.plot(history.history['top_k_categorical_accuracy'], label='Train Top-2 Accuracy')
+        plt.plot(history.history['val_top_k_categorical_accuracy'], label='Val Top-2 Accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Top-2 Accuracy')
+        plt.title('Evolución de Top-2 Accuracy')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+        plt.savefig(path_accuracy)
 
-    plt.show()
-    plt.savefig(path)
+    else:
+        plt.plot(history.history['accuracy'], label='Train Accuracy')
+        plt.plot(history.history['val_accuracy'], label='Val Accuracy')
+        plt.xlabel('Epochs')
+        plt.ylabel('Accuracy')
+        plt.title('Precisión')
+        plt.legend()
+        plt.show()
+        plt.savefig(path_accuracy)
+
     plt.close()
 

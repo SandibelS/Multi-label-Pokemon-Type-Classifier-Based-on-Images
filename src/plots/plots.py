@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def plot_feature_maps(feature_maps, limit=10, path='feature_maps.png'):
     """
@@ -26,6 +27,8 @@ def plot_feature_maps(feature_maps, limit=10, path='feature_maps.png'):
     plt.tight_layout()
     plt.savefig(path)
     plt.show()
+    plt.close()
+
 
 
 def plot_maxpool_output(pool_output, limit=10, path='maxpool_output'):
@@ -54,8 +57,9 @@ def plot_maxpool_output(pool_output, limit=10, path='maxpool_output'):
 
     plt.tight_layout()
     plt.savefig(path)
-
     plt.show()
+    plt.close()
+
 
 
 def image_grid(imagenes, filas=4, columnas=4, tamaño=(15,15), filename='src/plots/image_grid.png'):
@@ -79,6 +83,7 @@ def image_grid(imagenes, filas=4, columnas=4, tamaño=(15,15), filename='src/plo
     plt.tight_layout()
     plt.show()
     plt.savefig(filename)
+    plt.close()
 
 
 def plot_class_distribution(y, classes, path):
@@ -108,3 +113,27 @@ def plot_class_distribution(y, classes, path):
     # Guardar gráfico
     plt.savefig(path)
     plt.close()
+
+def plot_loss_and_accuracy_keras(history, path):
+
+    # loss
+    plt.plot(history.history['loss'], label='Train Loss')
+    plt.plot(history.history['val_loss'], label='Val Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Función de pérdida')
+    plt.legend()
+    plt.show()
+
+    # Accuracy
+    plt.plot(history.history['accuracy'], label='Train Accuracy')
+    plt.plot(history.history['val_accuracy'], label='Val Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.title('Precisión')
+    plt.legend()
+
+    plt.show()
+    plt.savefig(path)
+    plt.close()
+

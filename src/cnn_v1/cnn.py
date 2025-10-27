@@ -302,7 +302,7 @@ class Dense:
 # -------------------------------
 # Simple CNN Model
 # -------------------------------
-class SimpleCNN:
+class CNN_from_Scratch:
     """
     Red neuronal convolucional simple.
 
@@ -545,7 +545,6 @@ class SimpleCNN:
         # Devuelve los índices donde la probabilidad supera el umbral
         return [np.where(row >= threshold)[0].tolist() for row in probs]
     
-
     def evaluate_multi_label(y_true, y_pred):
         """
         Evalúa métricas de precisión, recall y F1 para clasificación multi-label.

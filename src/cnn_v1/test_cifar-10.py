@@ -1,6 +1,6 @@
 import numpy as np
 from keras.datasets import cifar10
-from cnn import SimpleCNN
+from cnn import CNN_from_Scratch
 from utility_functions import softmax, one_hot, accuracy, cross_entropy_loss, cross_entropy_grad
 
 
@@ -11,7 +11,7 @@ x_train = np.transpose(x_train, (0, 3, 1, 2))
 y_train_oh = one_hot(y_train, 10)
 
 
-model = SimpleCNN()
+model = CNN_from_Scratch()
 lr = 0.01
 epochs = 100
 batch_size = 32

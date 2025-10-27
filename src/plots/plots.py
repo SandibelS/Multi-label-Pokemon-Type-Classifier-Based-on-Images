@@ -114,7 +114,7 @@ def plot_class_distribution(y, classes, path):
     plt.savefig(path)
     plt.close()
 
-def plot_loss_and_accuracy_keras(history,TopKCategoricalAccuracy = False, path_loss = 'loss_keras.png', path_accuracy = 'accuracy_keras.png'):
+def plot_loss_and_accuracy_keras(history,TopKCategoricalAccuracy = False, path_loss = 'src/plots/loss_keras.png', path_accuracy = 'src/plots/accuracy_keras.png'):
 
     # loss
     plt.plot(history.history['loss'], label='Train Loss')
@@ -133,7 +133,7 @@ def plot_loss_and_accuracy_keras(history,TopKCategoricalAccuracy = False, path_l
         plt.plot(history.history['val_top_k_categorical_accuracy'], label='Val Top-2 Accuracy')
         plt.xlabel('Epochs')
         plt.ylabel('Top-2 Accuracy')
-        plt.title('Evolución de Top-2 Accuracy')
+        plt.title('Evolución de Top-2 precisión')
         plt.legend()
         plt.grid(True)
         plt.show()
@@ -150,4 +150,36 @@ def plot_loss_and_accuracy_keras(history,TopKCategoricalAccuracy = False, path_l
         plt.savefig(path_accuracy)
 
     plt.close()
+
+
+def plot_cnn_from_scratch_metrics(model, path_loss='src/plots/loss_scratch.png', path_accuracy = 'src/plots/accuracy_scratch.png'):
+
+    epochs = range(1, len(model.train_losses) + 1)
+
+    # Loss
+
+    plt.plot(epochs, model.train_losses, label='Train Loss', color='blue')
+    plt.plot(epochs, model.val_losses, label='Val Loss', color='orange')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Evolución de la pérdida')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    plt.savefig(path_loss)
+    plt.close()
+
+
+    # Precisión
+    plt.plot(epochs, model.train_accuracies, label='Train Top-2 Accuracy', color='blue')
+    plt.plot(epochs, model.val_accuracies, label='Val Top-2 Accuracy', color='orange')
+    plt.xlabel('Epochs')
+    plt.ylabel('Top-2 Accuracy')
+    plt.title('Evolución Top-2 precisión')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    plt.savefig(path_accuracy)
+    plt.close()
+
 

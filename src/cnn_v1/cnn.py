@@ -1,5 +1,5 @@
 import numpy as np
-from .utility_functions import softmax, accuracy, cross_entropy_loss, cross_entropy_grad, sigmoid, binary_cross_entropy, binary_cross_entropy_grad
+from .utility_functions import softmax, accuracy, cross_entropy_loss, cross_entropy_grad, sigmoid, binary_cross_entropy, binary_cross_entropy_grad, top_k_accuracy
 
 
 # -------------------------------
@@ -320,7 +320,7 @@ class CNN_from_Scratch:
 
         self.flatten = Flatten()
         # CIFAR10: input 32x32 -> 15x15 after conv+pool
-        self.fc1 = Dense(32*15*15, 10)  
+        self.fc1 = Dense(32*15*15, 18)  
 
         # Suponiendo una entrada de 32x32, ojo!
 
@@ -340,28 +340,12 @@ class CNN_from_Scratch:
             Dense(32*16*16, 18),
         ]
 
-        self.model_2 = [
-            Conv2D(16, 5, 5, padding=1),
-            ReLU(),
-            MaxPool2D(2, 2),
-            Flatten(),
-            Dense(16*15*15, 18),
-        ]
-
         self.model_3 = [
-            Conv2D(32, 5, 5, padding=1),
-            ReLU(),
-            MaxPool2D(2, 2),
-            Flatten(),
-            Dense(32*15*15, 18),
-        ]
-
-        self.model_4 = [
-            Conv2D(16, 5, 5, padding=1),
+            Conv2D(16, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 
-            Conv2D(32, 5, 5, padding=1),
+            Conv2D(32, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 
@@ -369,46 +353,22 @@ class CNN_from_Scratch:
             Dense(32*6*6, 18),
         ]
 
-
-        self.model_5 = [
-            Conv2D(16, 5, 5, padding=1),
+        self.model_4 = [
+            Conv2D(16, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 
-            Conv2D(32, 5, 5, padding=1),
+            Conv2D(32, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
         
-            Conv2D(64, 5, 5, padding=1),
+            Conv2D(64, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 
             Flatten(),
             Dense(64*2*2, 18),
         ]
-
-        self.model_6 = [
-            Conv2D(16, 5, 5, padding=1),
-            ReLU(),
-            MaxPool2D(2, 2),
-
-            Conv2D(32, 5, 5, padding=1),
-            ReLU(),
-            MaxPool2D(2, 2),
-        
-            Conv2D(64, 5, 5, padding=1),
-            ReLU(),
-            MaxPool2D(2, 2),
-
-            Flatten(),
-            Dense(64*2*2, 128),
-
-            Dense(128, 18),
-
-        ]
-
-
-
 
         
     def forward(self, x):
@@ -490,8 +450,13 @@ class CNN_from_Scratch:
 
         return predictions
 
-    def train_multi_label(self, learning_rate=0.01, epochs=50, batch_size=32 ):
+    def train_multi_label(self, model_id, x_train, y_train_oh, x_val, y_val_oh, learning_rate=0.01, epochs=50, batch_size=32 ):
 
+        self.train_losses = []
+        self.train_accuracies = []
+        self.val_losses = []
+        self.val_accuracies = [] 
+    
         for epoch in range(epochs):
             idx = np.random.permutation(len(x_train))
             x_train, y_train_oh = x_train[idx], y_train_oh[idx]
@@ -512,12 +477,30 @@ class CNN_from_Scratch:
                 d_out = binary_cross_entropy_grad(probs, y_batch)
                 self.backward(d_out, learning_rate)
             
-            # Accuracy
-            logits = self.forward(x_train)
-            probs = softmax(logits)
-            acc = accuracy(probs, y_train_oh)
+            # Evaluación en entrenamiento
+            train_logits = self.forward(x_train)
+            train_probs = sigmoid(train_logits)
+            train_loss = np.mean(losses)
+            train_acc = top_k_accuracy(train_probs, y_train_oh)
 
-            print(f"Epoch {epoch+1}/{epochs}, Loss: {np.mean(losses):.4f}, Accuracy: {acc*100:.4f}%")
+            # Evaluación en validación
+            val_logits = self.forward(x_val)
+            val_probs = sigmoid(val_logits)
+            val_loss = binary_cross_entropy(val_probs, y_val_oh)
+            val_acc = top_k_accuracy(val_probs, y_val_oh)
+
+            # Guardar métricas
+            self.train_losses.append(train_loss)
+            self.train_accuracies.append(train_acc)
+            self.val_losses.append(val_loss)
+            self.val_accuracies.append(val_acc)
+
+            print(f"Epoch {epoch+1}/{epochs} | Train Loss: {train_loss:.4f}, Train Acc: {train_acc*100:.2f}% | Val Loss: {val_loss:.4f}, Val Acc: {val_acc*100:.2f}%")
+
+
+        
+        return self.train_losses, self.train_accuracies, self.val_losses, self.val_accuracies 
+
 
         
     def predict_multi_label(self, x, threshold=0.5, top_k=None):
@@ -545,40 +528,29 @@ class CNN_from_Scratch:
         # Devuelve los índices donde la probabilidad supera el umbral
         return [np.where(row >= threshold)[0].tolist() for row in probs]
     
-    def evaluate_multi_label(y_true, y_pred):
+    def evaluate_multi_label(self, model_id, x, y_true_oh, batch_size=32):
         """
-        Evalúa métricas de precisión, recall y F1 para clasificación multi-label.
-
-        Parámetros:
-        - y_true (ndarray): etiquetas verdaderas (binarias), forma (n_samples, n_labels)
-        - y_pred (ndarray): etiquetas predichas (binarias), forma (n_samples, n_labels)
-
-        Retorna:
-        - metrics (dict): diccionario con precisión, recall y F1 promedio
+        Evalúa el modelo sobre un conjunto de datos.
         """
+        losses = []
+        all_preds = []
 
-        epsilon = 1e-7  # para evitar división por cero
-        precisions, recalls, f1s = [], [], []
+        for i in range(0, len(x), batch_size):
+            x_batch = x[i:i+batch_size]
+            y_batch = y_true_oh[i:i+batch_size]
 
-        for yt, yp in zip(y_true, y_pred):
-            tp = np.sum((yt == 1) & (yp == 1))
-            fp = np.sum((yt == 0) & (yp == 1))
-            fn = np.sum((yt == 1) & (yp == 0))
+            logits = self.forward(x_batch)
+            probs = sigmoid(logits)
+            loss = binary_cross_entropy(probs, y_batch)
+            losses.append(loss)
 
-            precision = tp / (tp + fp + epsilon)
-            recall = tp / (tp + fn + epsilon)
-            f1 = 2 * precision * recall / (precision + recall + epsilon)
+            all_preds.append(probs)
 
-            precisions.append(precision)
-            recalls.append(recall)
-            f1s.append(f1)
+        # Concatenar todas las predicciones
+        all_preds = np.vstack(all_preds)
+        acc = top_k_accuracy(all_preds, y_true_oh)
 
-        metrics = {
-            "precision": np.mean(precisions),
-            "recall": np.mean(recalls),
-            "f1_score": np.mean(f1s)
-        }
+        return np.mean(losses), acc
 
-        return metrics
 
 

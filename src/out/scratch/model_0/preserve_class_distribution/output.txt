@@ -1,0 +1,32 @@
+MODEL 1 (preserve_class_distribution)
+
+Conv2D(32, 3, 3)  
+ReLU()
+MaxPool2D(2, 2)
+Flatten()
+Dense(32*15*15, 18)
+
+input_size = 32x32
+learning_rate = 0.0001
+batch_size = 32
+
+Epoch 1/20 | Train Loss: 0.6704, Train Acc: 17.46% | Val Loss: 0.6069, Val Acc: 17.92%
+Epoch 2/20 | Train Loss: 0.5676, Train Acc: 18.56% | Val Loss: 0.5255, Val Acc: 18.50%
+Epoch 3/20 | Train Loss: 0.4975, Train Acc: 18.80% | Val Loss: 0.4675, Val Acc: 18.50%
+Epoch 4/20 | Train Loss: 0.4468, Train Acc: 19.05% | Val Loss: 0.4245, Val Acc: 19.65%
+Epoch 5/20 | Train Loss: 0.4087, Train Acc: 18.68% | Val Loss: 0.3920, Val Acc: 19.36%
+Epoch 6/20 | Train Loss: 0.3798, Train Acc: 19.29% | Val Loss: 0.3673, Val Acc: 20.23%
+Epoch 7/20 | Train Loss: 0.3579, Train Acc: 20.27% | Val Loss: 0.3485, Val Acc: 21.10%
+Epoch 8/20 | Train Loss: 0.3409, Train Acc: 19.90% | Val Loss: 0.3343, Val Acc: 22.25%
+Epoch 9/20 | Train Loss: 0.3280, Train Acc: 20.51% | Val Loss: 0.3235, Val Acc: 23.99%
+Epoch 10/20 | Train Loss: 0.3187, Train Acc: 20.76% | Val Loss: 0.3155, Val Acc: 23.70%
+Epoch 11/20 | Train Loss: 0.3118, Train Acc: 21.49% | Val Loss: 0.3097, Val Acc: 23.70%
+Epoch 12/20 | Train Loss: 0.3064, Train Acc: 21.37% | Val Loss: 0.3053, Val Acc: 23.12%
+Epoch 13/20 | Train Loss: 0.3023, Train Acc: 21.86% | Val Loss: 0.3022, Val Acc: 22.25%
+Epoch 14/20 | Train Loss: 0.2998, Train Acc: 22.34% | Val Loss: 0.2999, Val Acc: 22.83%
+Epoch 15/20 | Train Loss: 0.2975, Train Acc: 22.95% | Val Loss: 0.2983, Val Acc: 23.41%
+Epoch 16/20 | Train Loss: 0.2961, Train Acc: 23.20% | Val Loss: 0.2972, Val Acc: 24.28%
+Epoch 17/20 | Train Loss: 0.2948, Train Acc: 23.57% | Val Loss: 0.2963, Val Acc: 24.28%
+Epoch 18/20 | Train Loss: 0.2945, Train Acc: 23.81% | Val Loss: 0.2958, Val Acc: 24.28%
+Epoch 19/20 | Train Loss: 0.2937, Train Acc: 23.81% | Val Loss: 0.2954, Val Acc: 24.28%
+Epoch 20/20 | Train Loss: 0.2930, Train Acc: 23.93% | Val Loss: 0.2951, Val Acc: 24.28%

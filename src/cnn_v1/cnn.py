@@ -135,7 +135,7 @@ class ReLU:
         self.input = x
         return np.maximum(0, x)
     
-    def backward(self, d_out):
+    def backward(self, d_out, lr):
         """
         Propagación hacia atrás.
 
@@ -190,7 +190,7 @@ class MaxPool2D:
         self.output = output
         return output
 
-    def backward(self, d_out):
+    def backward(self, d_out, lr):
         """
         Propagación hacia atrás.
 
@@ -237,7 +237,7 @@ class Flatten:
         self.input_shape = x.shape
         return x.reshape(x.shape[0], -1)
     
-    def backward(self, d_out):
+    def backward(self, d_out, lr):
         """
         Reconstruye la forma original del tensor.
 
@@ -312,16 +312,6 @@ class CNN_from_Scratch:
         Inicializa las capas del modelo.
         """
 
-        # 32 filters, 3x3, RGB input
-        self.conv1 = Conv2D(32, 3, 3)  
-        self.relu1 = ReLU()
-        self.pool1 = MaxPool2D(2, 2)
-
-
-        self.flatten = Flatten()
-        # CIFAR10: input 32x32 -> 15x15 after conv+pool
-        self.fc1 = Dense(32*15*15, 18)  
-
         # Suponiendo una entrada de 32x32, ojo!
 
         self.model_0 = [
@@ -329,7 +319,7 @@ class CNN_from_Scratch:
             ReLU(),
             MaxPool2D(2, 2),
             Flatten(),
-            Dense(16*8*8, 18),
+            Dense(16*16*16, 18),
         ]
 
         self.model_1 = [
@@ -340,7 +330,7 @@ class CNN_from_Scratch:
             Dense(32*16*16, 18),
         ]
 
-        self.model_3 = [
+        self.model_2 = [
             Conv2D(16, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
@@ -350,10 +340,10 @@ class CNN_from_Scratch:
             MaxPool2D(2, 2),
 
             Flatten(),
-            Dense(32*6*6, 18),
+            Dense(32*8*8, 18),
         ]
 
-        self.model_4 = [
+        self.model_3 = [
             Conv2D(16, 3, 3, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
@@ -367,8 +357,11 @@ class CNN_from_Scratch:
             MaxPool2D(2, 2),
 
             Flatten(),
-            Dense(64*2*2, 18),
+            Dense(64*4*4, 18),
         ]
+
+        self.models = [self.model_0, self.model_1, self.model_2, self.model_3]
+        self.active_model = self.model_0
 
         
     def forward(self, x):
@@ -382,11 +375,9 @@ class CNN_from_Scratch:
         - logits (ndarray): salida sin activación final
         """
 
-        out = self.conv1.forward(x)
-        out = self.relu1.forward(out)
-        out = self.pool1.forward(out)
-        out = self.flatten.forward(out)
-        out = self.fc1.forward(out)
+        out = x
+        for layer in self.active_model:
+            out = layer.forward(out)
 
         return out
     
@@ -399,11 +390,10 @@ class CNN_from_Scratch:
         - lr (float): tasa de aprendizaje
         """
 
-        d = self.fc1.backward(d_out, lr)
-        d = self.flatten.backward(d)
-        d = self.pool1.backward(d)
-        d = self.relu1.backward(d)
-        d = self.conv1.backward(d, lr)
+        d = d_out
+        for layer in reversed(self.active_model):
+            d = layer.backward(d, lr)
+
 
     def train_multi_class(self, learning_rate=0.01, epochs=50, batch_size=32 ):
 
@@ -451,6 +441,8 @@ class CNN_from_Scratch:
         return predictions
 
     def train_multi_label(self, model_id, x_train, y_train_oh, x_val, y_val_oh, learning_rate=0.01, epochs=50, batch_size=32 ):
+
+        self.active_model = self.models[model_id]
 
         self.train_losses = []
         self.train_accuracies = []

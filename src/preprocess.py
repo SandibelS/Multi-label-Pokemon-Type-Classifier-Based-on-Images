@@ -66,6 +66,7 @@ def preproccess_images(images_path : str, csv_path : str, resize : int, channels
     print(X.shape)
     plt.imshow(X[2])
     plt.savefig('src/plots/image_example.png')
+    plt.close()
 
     image_grid(X[0:32])
 

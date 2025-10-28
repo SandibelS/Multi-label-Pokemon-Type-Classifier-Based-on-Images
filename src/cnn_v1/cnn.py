@@ -335,7 +335,7 @@ class CNN_from_Scratch:
             ReLU(),
             MaxPool2D(2, 2),
 
-            Conv2D(32, 3, 3, padding=1),
+            Conv2D(32, 3, 16, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 
@@ -348,11 +348,11 @@ class CNN_from_Scratch:
             ReLU(),
             MaxPool2D(2, 2),
 
-            Conv2D(32, 3, 3, padding=1),
+            Conv2D(32, 3, 16, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
         
-            Conv2D(64, 3, 3, padding=1),
+            Conv2D(64, 3, 32, padding=1),
             ReLU(),
             MaxPool2D(2, 2),
 

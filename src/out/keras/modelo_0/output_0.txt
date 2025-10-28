@@ -1,0 +1,55 @@
+model 0
+
+Conv2D(16, 3, 3)  
+ReLU()
+MaxPool2D(2, 2)
+Flatten()
+Dense(16*16*16, 18)
+
+input_size = 32x32
+learning_rate = 0.0001
+batch_size = 32
+
+26/26 ━━━━━━━━━━━━━━━━━━━━ 3s 74ms/step - loss: 0.4712 - top_k_categorical_accuracy: 0.1190 - val_loss: 0.3146 - val_top_k_categorical_accuracy: 0.0914
+Epoch 2/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step - loss: 0.3020 - top_k_categorical_accuracy: 0.1288 - val_loss: 0.2890 - val_top_k_categorical_accuracy: 0.1657
+Epoch 3/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2942 - top_k_categorical_accuracy: 0.1890 - val_loss: 0.2876 - val_top_k_categorical_accuracy: 0.2086
+Epoch 4/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2932 - top_k_categorical_accuracy: 0.1877 - val_loss: 0.2872 - val_top_k_categorical_accuracy: 0.2114
+Epoch 5/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2928 - top_k_categorical_accuracy: 0.1951 - val_loss: 0.2871 - val_top_k_categorical_accuracy: 0.2314
+Epoch 6/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2921 - top_k_categorical_accuracy: 0.2025 - val_loss: 0.2867 - val_top_k_categorical_accuracy: 0.2000
+Epoch 7/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2917 - top_k_categorical_accuracy: 0.1914 - val_loss: 0.2863 - val_top_k_categorical_accuracy: 0.2200
+Epoch 8/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2908 - top_k_categorical_accuracy: 0.2245 - val_loss: 0.2864 - val_top_k_categorical_accuracy: 0.2314
+Epoch 9/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2900 - top_k_categorical_accuracy: 0.2331 - val_loss: 0.2857 - val_top_k_categorical_accuracy: 0.2343
+Epoch 10/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2887 - top_k_categorical_accuracy: 0.2491 - val_loss: 0.2861 - val_top_k_categorical_accuracy: 0.2143
+Epoch 11/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2875 - top_k_categorical_accuracy: 0.2466 - val_loss: 0.2849 - val_top_k_categorical_accuracy: 0.2429
+Epoch 12/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2857 - top_k_categorical_accuracy: 0.2613 - val_loss: 0.2847 - val_top_k_categorical_accuracy: 0.2343
+Epoch 13/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step - loss: 0.2843 - top_k_categorical_accuracy: 0.2957 - val_loss: 0.2837 - val_top_k_categorical_accuracy: 0.2343
+Epoch 14/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2825 - top_k_categorical_accuracy: 0.2785 - val_loss: 0.2835 - val_top_k_categorical_accuracy: 0.2343
+Epoch 15/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2808 - top_k_categorical_accuracy: 0.2933 - val_loss: 0.2827 - val_top_k_categorical_accuracy: 0.2343
+Epoch 16/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2791 - top_k_categorical_accuracy: 0.3288 - val_loss: 0.2822 - val_top_k_categorical_accuracy: 0.2429
+Epoch 17/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2778 - top_k_categorical_accuracy: 0.3252 - val_loss: 0.2811 - val_top_k_categorical_accuracy: 0.2457
+Epoch 18/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2758 - top_k_categorical_accuracy: 0.3092 - val_loss: 0.2813 - val_top_k_categorical_accuracy: 0.2486
+Epoch 19/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2736 - top_k_categorical_accuracy: 0.3521 - val_loss: 0.2801 - val_top_k_categorical_accuracy: 0.2657
+Epoch 20/20
+26/26 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2718 - top_k_categorical_accuracy: 0.3620 - val_loss: 0.2796 - val_top_k_categorical_accuracy: 0.2657
+11/11 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step - loss: 0.2796 - top_k_categorical_accuracy: 0.2657 
+
+Loss in test: 0.2796
+Accuracy in test: 0.2657

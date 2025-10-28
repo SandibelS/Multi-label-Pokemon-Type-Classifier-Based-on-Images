@@ -78,7 +78,7 @@ Donde los argumentos pueden ser:
 
 ## Dataset
 
-Descargue el siguiente dataset, el archivo se debe descomprimir en la carpeta data/ y renonbrarlo con el nombre 'dataset_of_32k_pokemon_Images_and_csv_json'
+Descargue el siguiente dataset, el archivo se debe descomprimir en la carpeta data/ y renombrarlo con el nombre 'dataset_of_32k_pokemon_Images_and_csv_json'
 
 - [Dataset of 32000 Pokemon Images & CSV, JSON. Kaggle.](https://www.kaggle.com/datasets/divyanshusingh369/complete-pokemon-library-32k-images-and-csv/data)
 

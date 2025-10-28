@@ -24,7 +24,7 @@ class CNN_keras():
         # MODEL 0
 
         model_0 = Sequential()
-        model_0.add(Conv2D(filters=64, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
+        model_0.add(Conv2D(filters=16, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
 
         model_0.add(MaxPooling2D(pool_size=(2, 2)))
 
@@ -56,60 +56,15 @@ class CNN_keras():
 
         # --------------------------------------
 
-        # MODEL 3
+    
+        self.models = [model_0, model_1, model_2]
 
-        model_3 = Sequential()
-        model_3.add(Conv2D(filters=16, kernel_size=(3, 3), activation="relu", input_shape=(input_size, input_size, input_channels)))
-        model_3.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_3.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu'))
-        model_3.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_3.add(Conv2D(filters=64, kernel_size=(3, 3), activation='relu'))
-        model_3.add(MaxPooling2D(pool_size=(2, 2)))
-
-        model_3.add(Flatten())
-        model_3.add(Dense(18, activation='sigmoid'))
-
-        # --------------------------------------
-
-        self.model_4 = tf.keras.Sequential([
-
-                Input(shape=(input_size, input_size, input_channels)),
-
-                RandomFlip("horizontal"),
-                RandomRotation(0.1),
-                RandomZoom(0.1),
-                RandomTranslation(0.1, 0.1),
- 
-                Conv2D(16, (3, 3), activation='relu'), 
-                BatchNormalization(), 
-                MaxPooling2D((2, 2)),   
-
-                Conv2D(32, (3, 3), activation='relu'), 
-                BatchNormalization(), 
-                MaxPooling2D((2, 2)), 
-
-                Conv2D(64, (3, 3), activation='relu'), 
-                BatchNormalization(), 
-                MaxPooling2D((2, 2)), 
-
-                                
-                Flatten(), 
-                Dense(18), 
-            ])
-
-        # --------------------------------------
-
-        self.model_4.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), 
+        for model in self.models:
+            
+            model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001), 
                           loss=tf.keras.losses.BinaryCrossentropy(from_logits=True), 
                           metrics=[tf.keras.metrics.TopKCategoricalAccuracy(k=2)])
 
-        self.models = [model_0, model_1, model_2, model_3, self.model_4]
-
-        # for model in self.models:
-        #     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-        #     model.summary()
 
     def train(self, model_id, X_train, y_train, X_test, y_test, batch_size=32, epochs=10):
 

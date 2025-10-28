@@ -21,44 +21,82 @@ def main():
 
     #------------------------------------ VARIABLES DE FLUJO -------------------------------------------#
 
-    # Modo: From-Scratch - 0 , Keras - 1 (Por default en 1)
-    mode = 0
 
-    # Tamaño a redimensionar las imagenes, por defecto en 128
-    input_resize = 32
+    parser = argparse.ArgumentParser(description="Entrenamiento de clasificador de tipos de Pokémon")
+
+    # Argumentos opcionales con valores por defecto
+    parser.add_argument('--mode', type=int, default=1, help='Modo: From-Scratch (0) o Keras (1)')
+    parser.add_argument('--input_resize', type=int, default=32, help='Tamaño de redimensionamiento de imágenes')
+    parser.add_argument('--input_channels', type=int, default=3, help='Número de canales de entrada (RGB = 3)')
+    parser.add_argument('--csv_path', type=str, default='data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv', help='Ruta al CSV limpio')
+    # parser.add_argument('--preserve_class_distribution', action='store_true', help='Preservar distribución de clases en el split')
+    parser.add_argument('--preserve_class_distribution', type=bool, default=True, help='Preservar distribución de clases en el split')
+    parser.add_argument('--test_size', type=float, default=0.3, help='Proporción del conjunto de validación')
+    parser.add_argument('--model_id', type=int, default=0, help='ID del modelo a usar')
+    parser.add_argument('--learning_rate', type=float, default=0.001, help='Tasa de aprendizaje')
+    parser.add_argument('--epochs', type=int, default=20, help='Número de épocas')
+    parser.add_argument('--batch_size', type=int, default=32, help='Tamaño del batch')
+
+    args = parser.parse_args()
+
+    # Variables de flujo
+
+    # # Modo: From-Scratch - 0 , Keras - 1 (Por default en 1)
+    mode = args.mode
+
+    # Tamaño a redimensionar las imagenes, por defecto en 32
+    input_resize = args.input_resize
 
     # Canales de la imagen, por defecto en 3 (RGB)
-    input_channels = 3
+    input_channels = args.input_channels
 
     # Path al csv limpio (Solo nombres de pokemones y sus tipos en formato multi-hot)
-    csv_path = 'data/dataset_of_32k_pokemon_Images_and_csv_json/pokemon_types_one_hot.csv'
+    csv_path = args.csv_path
+
+    # Variable para decidir el tipo de división para los conjuntos de entrenamiento y validación
+    # para preservar la distribucion de clases
+    preserve_class_distribution = args.preserve_class_distribution
+
+    # Tamaño del conjunto de validación (El tam de set de entrenamiento se infiere)
+    test_size = args.test_size
+
+    # Id del modelo a usar 
+    model_id = args.model_id
+
+    # Taza de aprendizaje
+    learning_rate = args.learning_rate
+
+    # Cantidad de epocas
+    epochs = args.epochs
+
+    # Tamaño del batch
+    batch_size = args.batch_size
+
+    # Obtener clases
+    classes = get_classes(csv_path, 1)
+
+    print()
+    # Mostrar configuración
+    print("Configuración del entrenamiento:")
+    print(f"Modo: {mode}")
+    print(f"Redimensionamiento: {input_resize}px")
+    print(f"Canales: {input_channels}")
+    print(f"CSV: {csv_path}")
+    print(f"Preservar distribución: {preserve_class_distribution}")
+    print(f"Test size: {test_size}")
+    print(f"Modelo ID: {model_id}")
+    print(f"Learning rate: {learning_rate}")
+    print(f"Épocas: {epochs}")
+    print(f"Batch size: {batch_size}")
+    print()
+
 
     # Clases (Los tipos de pokemon)
     classes = get_classes(csv_path, 1)
 
-    # Variable para decidir el tipo de división para los conjuntos de entrenamiento y validación
-    # para preservar la distribucion de clases
-    preserve_class_distribution = False
-
-    # Tamaño del conjunto de validación (El tam de set de entrenamiento se infiere)
-    test_size = 0.3
-
-    # Id del modelo a usar 
-    model_id = 0
-
-    # Taza de aprendizaje
-    learning_rate = 0.0001
-
-    # Cantidad de epocas
-    epochs = 20
-
-    # Tamaño del batch
-    batch_size = 32
-
 
     #------------------------------------ PRE-PROCESAMIENTO --------------------------------------------#
 
-    # Esto tal vez deberia ir en otra parte
     remove_parentheses_from_folders_and_files('data/dataset_of_32k_pokemon_Images_and_csv_json/Pokemon_Images_DB/Pokemon_Images_DB')
 
     # Una lista de algunos pokemones con casos especiales

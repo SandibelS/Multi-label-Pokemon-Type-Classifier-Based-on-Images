@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--preserve_class_distribution', type=bool, default=True, help='Preservar distribución de clases en el split')
     parser.add_argument('--test_size', type=float, default=0.3, help='Proporción del conjunto de validación')
     parser.add_argument('--model_id', type=int, default=0, help='ID del modelo a usar')
-    parser.add_argument('--learning_rate', type=float, default=0.001, help='Tasa de aprendizaje')
+    parser.add_argument('--learning_rate', type=float, default=0.0001, help='Tasa de aprendizaje')
     parser.add_argument('--epochs', type=int, default=20, help='Número de épocas')
     parser.add_argument('--batch_size', type=int, default=32, help='Tamaño del batch')
 

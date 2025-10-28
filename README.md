@@ -76,11 +76,12 @@ Donde los argumentos pueden ser:
 
 - batch_size: tamaño del batch para entrenamiento. Por defecto es 32.
 
-## Datasets
+## Dataset
+
+Descargue el siguiente dataset, el archivo se debe descomprimir en la carpeta data/ y renonbrarlo con el nombre 'dataset_of_32k_pokemon_Images_and_csv_json'
 
 - [Dataset of 32000 Pokemon Images & CSV, JSON. Kaggle.](https://www.kaggle.com/datasets/divyanshusingh369/complete-pokemon-library-32k-images-and-csv/data)
 
-- [Pokémon Pokédex: list of Pokémon with stats.](https://pokemondb.net/pokedex/all)
 
 
 ## Structure

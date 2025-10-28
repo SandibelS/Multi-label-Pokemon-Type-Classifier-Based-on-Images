@@ -56,25 +56,25 @@ o
 
 Donde los argumentos pueden ser:
 
--mode: define el modo de entrenamiento.  0 para entrenar desde cero y 1 para usar Keras. Por defecto es 1.
+- mode: define el modo de entrenamiento.  0 para entrenar desde cero y 1 para usar Keras. Por defecto es 1.
 
--input_resize: tamaño al que se redimensionan las imágenes antes de ser procesadas. Por defecto es 32.
+- input_resize: tamaño al que se redimensionan las imágenes antes de ser procesadas. Por defecto es 32.
 
--input_channels: número de canales de entrada. Para imágenes RGB, el valor es 3.
+- input_channels: número de canales de entrada. Para imágenes RGB, el valor es 3.
 
--csv_path: ruta al archivo CSV que contiene las etiquetas multi-hot de los Pokémon. Por defecto apunta al dataset limpio.
+- csv_path: ruta al archivo CSV que contiene las etiquetas multi-hot de los Pokémon. Por defecto apunta al dataset limpio.
 
--preserve_class_distribution: indica si se debe preservar la distribución de clases al dividir el dataset en entrenamiento y validación. Por defecto es True.
+- preserve_class_distribution: indica si se debe preservar la distribución de clases al dividir el dataset en entrenamiento y validación. Por defecto es True.
 
--test_size: proporción del conjunto de validación. Por defecto es 0.3, es decir, 30% del total.
+- test_size: proporción del conjunto de validación. Por defecto es 0.3, es decir, 30% del total.
 
--model_id: ID del modelo a usar, de 0 a 2. Por defecto es 0.
+- model_id: ID del modelo a usar, de 0 a 2. Por defecto es 0.
 
--learning_rate: tasa de aprendizaje para el entrenamiento. Por defecto es 0.0001.
+- learning_rate: tasa de aprendizaje para el entrenamiento. Por defecto es 0.0001.
 
--epochs: número de épocas de entrenamiento. Por defecto es 20.
+- epochs: número de épocas de entrenamiento. Por defecto es 20.
 
--batch_size: tamaño del batch para entrenamiento. Por defecto es 32.
+- batch_size: tamaño del batch para entrenamiento. Por defecto es 32.
 
 ## Datasets
 

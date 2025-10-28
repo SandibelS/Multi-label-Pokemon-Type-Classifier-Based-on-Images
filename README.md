@@ -40,11 +40,11 @@ Para ejecutar el codigo:
 
 Primero se realiza la limpieza ejecutando:
 
-```python src/cleaning.py ``
+```python src/cleaning.py```
 
 o
 
-```python3 src/cleaning.py``
+```python3 src/cleaning.py```
 
 Luego
 
